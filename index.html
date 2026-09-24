@@ -3,401 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escola Virtual - Cursos de Programação</title>
+    <title>DevHub - Cursos de Programação</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         body {
-            background: #faf7ff;
-            color: #2a1b3d;
-            line-height: 1.6;
+            background: #0f1117;
+            color: #e4e6eb;
+            display: flex;
+            min-height: 100vh;
         }
 
-        /* Cabeçalho */
-        header {
-            background: linear-gradient(135deg, #4a148c, #9c27b0, #e91e63);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.35);
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #16181f;
+            border-right: 1px solid #23262f;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: #00d9a3;
+        }
+
+        .sidebar h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6b7280;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: #b0b4bd;
+            text-decoration: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+            font-size: 0.92rem;
+            transition: all 0.2s;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.ativo {
+            background: #1f2230;
+            color: #00d9a3;
+        }
+
+        /* Conteúdo principal */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 2.5rem 3rem;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .topbar h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+        }
+
+        .topbar h1 span {
+            color: #00d9a3;
+        }
+
+        .topbar p {
+            color: #8b8f99;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .btn-primario {
+            background: #00d9a3;
+            color: #0f1117;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primario:hover {
+            background: #00f0b5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 217, 163, 0.3);
+        }
+
+        /* Estatísticas */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: #16181f;
+            border: 1px solid #23262f;
+            border-radius: 12px;
+            padding: 1.3rem;
+            transition: border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #00d9a3;
+        }
+
+        .stat-card .numero {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00d9a3;
+        }
+
+        .stat-card .rotulo {
+            color: #8b8f99;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Grid de cursos */
+        .secao-titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .secao-titulo::before {
+            content: '';
+            width: 4px;
+            height: 22px;
+            background: #00d9a3;
+            border-radius: 4px;
+        }
+
+        .grid-cursos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card-curso {
+            background: #16181f;
+            border: 1px solid #23262f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.25s;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        header::before {
+        .card-curso::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: brilho 6s infinite linear;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #00d9a3;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
         }
 
-        @keyframes brilho {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            position: relative;
-        }
-
-        /* Navegação */
-        nav {
-            background: #311b4a;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0.8rem;
-            gap: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        nav a {
-            color: #e1bee7;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        nav a:hover {
-            background: #9c27b0;
-            color: white;
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Seções */
-        section {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 25px rgba(156, 39, 176, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 4px solid #9c27b0;
-        }
-
-        section:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.18);
-        }
-
-        h2 {
-            color: #4a148c;
-            font-size: 1.8rem;
-            margin-bottom: 1.2rem;
-            border-left: 6px solid #9c27b0;
-            padding-left: 1rem;
-        }
-
-        h3 {
-            color: #6a1b9a;
-            margin: 1rem 0 0.5rem;
-        }
-
-        /* Grid de cursos */
-        .cursos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .curso-card {
-            background: #faf5ff;
-            border: 1px solid #e1bee7;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .curso-card:hover {
-            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.25);
-            border-color: #9c27b0;
+        .card-curso:hover {
+            border-color: #00d9a3;
             transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 217, 163, 0.1);
         }
 
-        .curso-card h4 {
-            color: #4a148c;
-            font-size: 1.2rem;
+        .card-curso:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-curso .icone {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-curso h4 {
+            font-size: 1.05rem;
             margin-bottom: 0.5rem;
+            color: #fff;
         }
 
-        .curso-card p {
-            font-size: 0.95rem;
-            color: #4a3a5a;
-            flex: 1;
+        .card-curso p {
+            font-size: 0.85rem;
+            color: #8b8f99;
+            line-height: 1.5;
+            margin-bottom: 1rem;
         }
 
-        .badge {
+        .tag {
             display: inline-block;
-            background: linear-gradient(135deg, #e1bee7, #f8bbd0);
-            color: #4a148c;
-            font-size: 0.8rem;
+            background: rgba(0, 217, 163, 0.12);
+            color: #00d9a3;
+            font-size: 0.72rem;
             font-weight: 600;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 20px;
-            margin-top: 0.8rem;
-            align-self: flex-start;
         }
 
         /* Destaque Python */
-        .python-destaque {
-            background: linear-gradient(135deg, #fce4ec, #ede7f6);
-            border-left: 6px solid #e91e63;
-            border-top: 4px solid #e91e63;
-        }
-
-        .python-destaque h2 {
-            border-left-color: #e91e63;
-        }
-
-        .python-info {
+        .python-box {
+            background: linear-gradient(135deg, #1a1f2e, #16181f);
+            border: 1px solid #2a3040;
+            border-radius: 16px;
+            padding: 2.5rem;
             display: flex;
-            flex-wrap: wrap;
             gap: 2rem;
             align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .python-box::after {
+            content: '';
+            position: absolute;
+            right: -100px;
+            top: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 217, 163, 0.15), transparent 70%);
+            border-radius: 50%;
         }
 
         .python-texto {
             flex: 2;
-            min-width: 250px;
+            min-width: 280px;
+            z-index: 1;
         }
 
-        .python-icone {
+        .python-texto h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .python-texto h2 span {
+            color: #00d9a3;
+        }
+
+        .python-texto p {
+            color: #a0a5b0;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .python-texto ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .python-texto ul li {
+            color: #c5c9d3;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .python-texto ul li::before {
+            content: '▸';
+            color: #00d9a3;
+            font-weight: bold;
+        }
+
+        .python-visual {
             flex: 1;
-            font-size: 5rem;
+            min-width: 220px;
             text-align: center;
-            filter: drop-shadow(0 0 15px rgba(233, 30, 99, 0.4));
-            animation: flutuar 3s ease-in-out infinite;
+            z-index: 1;
         }
 
-        @keyframes flutuar {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .python-visual .emoji {
+            font-size: 6rem;
+            filter: drop-shadow(0 0 30px rgba(0, 217, 163, 0.4));
         }
 
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #9c27b0, #e91e63);
-            color: white;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
+        .contador {
             margin-top: 1rem;
-            transition: transform 0.2s, box-shadow 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+            font-size: 0.85rem;
+            color: #8b8f99;
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(233, 30, 99, 0.5);
+        .contador strong {
+            color: #00d9a3;
+            font-size: 1.3rem;
+            display: block;
         }
 
         /* Rodapé */
         footer {
-            background: #311b4a;
-            color: #e1bee7;
             text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 2rem;
-            font-size: 0.9rem;
+            color: #6b7280;
+            font-size: 0.85rem;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid #23262f;
         }
 
         footer a {
-            color: #f8bbd0;
+            color: #00d9a3;
             text-decoration: none;
         }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Interatividade JS */
-        .mensagem-js {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            background: #f3e5f5;
-            border-radius: 8px;
-            color: #4a148c;
-            font-weight: 500;
-            display: none;
-            border-left: 4px solid #9c27b0;
-        }
-
-        .mensagem-js.visivel {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Responsivo */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+            .main {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            body { flex-direction: column; }
+        }
+
         @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            .container { padding: 0 1rem; }
-            section { padding: 1.5rem; }
-            .python-icone { font-size: 3.5rem; }
+            .topbar h1 { font-size: 1.4rem; }
+            .python-box { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>✨ Escola Virtual</h1>
-        <p>Cursos gratuitos de Programação e Python Básico</p>
-    </header>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Dev<span>Hub</span></div>
 
-    <nav>
-        <a href="#programacao">Programação</a>
-        <a href="#python">Python Básico</a>
-        <a href="#sobre">Sobre</a>
-    </nav>
+        <h3>Menu</h3>
+        <nav>
+            <a href="#inicio" class="ativo">🏠 Início</a>
+            <a href="#cursos">📚 Cursos</a>
+            <a href="#python">🐍 Python</a>
+            <a href="#sobre">ℹ️ Sobre</a>
+        </nav>
 
-    <div class="container">
+        <h3>Recursos</h3>
+        <nav>
+            <a href="https://www.ev.org.br" target="_blank" rel="noopener">🔗 Site Oficial</a>
+            <a href="https://www.ev.org.br/areas-de-interesse/programacao" target="_blank" rel="noopener">💻 Programação</a>
+        </nav>
+    </aside>
 
-        <section id="programacao">
-            <h2>💻 Cursos de Programação</h2>
-            <p>Baseado na área de interesse <strong>Programação</strong> da <a href="https://www.ev.org.br/areas-de-interesse/programacao" target="_blank" rel="noopener">Escola Virtual</a> da Fundação Bradesco. Todos os cursos são gratuitos e com certificado digital.</p>
+    <!-- Conteúdo -->
+    <main class="main" id="inicio">
+        <div class="topbar">
+            <div>
+                <h1>Cursos de <span>Programação</span></h1>
+                <p>Trilha completa baseada na Escola Virtual da Fundação Bradesco</p>
+            </div>
+            <button class="btn-primario" id="btnExplorar">Explorar Cursos</button>
+        </div>
 
-            <div class="cursos-grid">
-                <div class="curso-card">
-                    <h4>Lógica de Programação</h4>
-                    <p>Aprenda os fundamentos da lógica para desenvolver algoritmos e resolver problemas computacionais.</p>
-                    <span class="badge">Iniciante</span>
-                </div>
-                <div class="curso-card">
-                    <h4>Python Básico</h4>
-                    <p>Introdução à linguagem Python: variáveis, tipos de dados, estruturas de controle e funções.</p>
-                    <span class="badge">Iniciante</span>
-                </div>
-                <div class="curso-card">
-                    <h4>Java Básico</h4>
-                    <p>Primeiros passos com Java: sintaxe, orientação a objetos e criação de aplicações simples.</p>
-                    <span class="badge">Iniciante</span>
-                </div>
-                <div class="curso-card">
-                    <h4>HTML e CSS</h4>
-                    <p>Desenvolvimento web front-end: estrutura com HTML5 e estilização com CSS3.</p>
-                    <span class="badge">Iniciante</span>
-                </div>
-                <div class="curso-card">
-                    <h4>JavaScript</h4>
-                    <p>Programação client-side para tornar páginas web interativas e dinâmicas.</p>
-                    <span class="badge">Intermediário</span>
-                </div>
-                <div class="curso-card">
-                    <h4>Banco de Dados</h4>
-                    <p>Modelagem e consultas SQL para armazenamento e recuperação de informações.</p>
-                    <span class="badge">Intermediário</span>
+        <!-- Estatísticas -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="numero" id="statCursos">6</div>
+                <div class="rotulo">Cursos disponíveis</div>
+            </div>
+            <div class="stat-card">
+                <div class="numero">100%</div>
+                <div class="rotulo">Gratuitos</div>
+            </div>
+            <div class="stat-card">
+                <div class="numero">60</div>
+                <div class="rotulo">Dias por curso</div>
+            </div>
+            <div class="stat-card">
+                <div class="numero">70%</div>
+                <div class="rotulo">Mínimo para aprovação</div>
+            </div>
+        </div>
+
+        <!-- Cursos -->
+        <div id="cursos">
+            <h2 class="secao-titulo">Trilha de Programação</h2>
+            <div class="grid-cursos" id="listaCursos">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+
+        <!-- Python -->
+        <div class="python-box" id="python">
+            <div class="python-texto">
+                <h2>Curso de <span>Python Básico</span></h2>
+                <p>Aprenda a linguagem mais popular do mundo do zero, com certificado gratuito reconhecido.</p>
+                <ul>
+                    <li>Variáveis e tipos</li>
+                    <li>Condicionais</li>
+                    <li>Laços de repetição</li>
+                    <li>Funções</li>
+                    <li>Listas e dicionários</li>
+                    <li>Módulos</li>
+                </ul>
+                <button class="btn-primario" id="btnPythonInfo">Ver Detalhes</button>
+            </div>
+            <div class="python-visual">
+                <div class="emoji">🐍</div>
+                <div class="contador">
+                    <strong id="contadorAlunos">0</strong>
+                    alunos já estudaram Python aqui
                 </div>
             </div>
+        </div>
 
-            <button class="btn" id="btnMostrarCursos">Mostrar todos os cursos</button>
-            <div class="mensagem-js" id="mensagemCursos">
-                ✅ A Escola Virtual oferece diversos outros cursos na área de Tecnologia. Acesse o site oficial para ver o catálogo completo!
-            </div>
-        </section>
+        <!-- Sobre -->
+        <div id="sobre">
+            <h2 class="secao-titulo">Sobre a Escola Virtual</h2>
+            <p style="color: #a0a5b0; line-height: 1.7; max-width: 800px;">
+                A <strong style="color: #00d9a3;">Escola Virtual</strong> é uma plataforma de educação online gratuita da
+                <strong style="color: #fff;">Fundação Bradesco</strong>. Oferece cursos livres (FIC) com certificado digital
+                válido por 2 anos, nas áreas de Administração, Contabilidade, Desenvolvimento Pessoal, Educação e Tecnologia.
+                Basta criar uma conta em <a href="https://www.ev.org.br" target="_blank" rel="noopener" style="color: #00d9a3;">www.ev.org.br</a>.
+            </p>
+        </div>
 
-        <section id="python" class="python-destaque">
-            <h2>🐍 Python Básico</h2>
-            <div class="python-info">
-                <div class="python-texto">
-                    <p><strong>Python</strong> é uma linguagem de programação versátil, fácil de aprender e amplamente utilizada no mercado. Com ela você pode criar desde scripts simples até aplicações web, análise de dados e inteligência artificial.</p>
-                    <h3>O que você vai aprender:</h3>
-                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Variáveis e tipos de dados</li>
-                        <li>Operadores e expressões</li>
-                        <li>Estruturas condicionais (if/else)</li>
-                        <li>Laços de repetição (for/while)</li>
-                        <li>Funções e módulos</li>
-                        <li>Listas, tuplas e dicionários</li>
-                    </ul>
-                    <button class="btn" id="btnPython">Quero saber mais sobre Python</button>
-                    <div class="mensagem-js" id="mensagemPython">
-                        🐍 Python é uma excelente escolha para iniciantes! Na Escola Virtual você encontra o curso <strong>Python Básico</strong> com certificado gratuito.
-                    </div>
-                </div>
-                <div class="python-icone">🐍</div>
-            </div>
-        </section>
-
-        <section id="sobre">
-            <h2>ℹ️ Sobre a Escola Virtual</h2>
-            <p>A <strong>Escola Virtual</strong> é uma plataforma de educação online gratuita criada pela <strong>Fundação Bradesco</strong>. Oferece cursos livres de Formação Inicial e Continuada (FIC) nas áreas de Administração, Contabilidade, Desenvolvimento Pessoal, Educação e Tecnologia.</p>
-            <p style="margin-top: 1rem;">Os cursos são autoinstrucionais, com certificado digital válido por 2 anos. Para se inscrever, basta criar uma conta no site oficial: <a href="https://www.ev.org.br" target="_blank" rel="noopener">www.ev.org.br</a>.</p>
-        </section>
-
-    </div>
-
-    <footer>
-        <p>Site demonstrativo criado para fins educacionais. Todos os direitos sobre os cursos pertencem à <a href="https://www.ev.org.br" target="_blank" rel="noopener">Escola Virtual - Fundação Bradesco</a>.</p>
-        <p style="margin-top: 0.5rem;">© 2026 - Tema Roxo Neon ✨</p>
-    </footer>
+        <footer>
+            <p>Site demonstrativo educacional • Dados baseados na <a href="https://www.ev.org.br/areas-de-interesse/programacao" target="_blank" rel="noopener">Escola Virtual</a></p>
+            <p style="margin-top: 0.5rem;">© 2026 DevHub — Tema Dark</p>
+        </footer>
+    </main>
 
     <script>
-        const btnMostrarCursos = document.getElementById('btnMostrarCursos');
-        const mensagemCursos = document.getElementById('mensagemCursos');
+        // Dados dos cursos
+        const cursos = [
+            { icone: '🧠', titulo: 'Lógica de Programação', desc: 'Fundamentos da lógica e algoritmos.', nivel: 'Iniciante' },
+            { icone: '🐍', titulo: 'Python Básico', desc: 'Introdução à linguagem Python na prática.', nivel: 'Iniciante' },
+            { icone: '☕', titulo: 'Java Básico', desc: 'Primeiros passos com Java e POO.', nivel: 'Iniciante' },
+            { icone: '🌐', titulo: 'HTML e CSS', desc: 'Desenvolvimento web front-end.', nivel: 'Iniciante' },
+            { icone: '⚡', titulo: 'JavaScript', desc: 'Torne suas páginas web interativas.', nivel: 'Intermediário' },
+            { icone: '🗄️', titulo: 'Banco de Dados', desc: 'Modelagem e consultas SQL.', nivel: 'Intermediário' }
+        ];
 
-        btnMostrarCursos.addEventListener('click', function() {
-            mensagemCursos.classList.toggle('visivel');
-            btnMostrarCursos.textContent = mensagemCursos.classList.contains('visivel')
-                ? 'Ocultar mensagem' : 'Mostrar todos os cursos';
+        // Renderizar cards
+        const listaCursos = document.getElementById('listaCursos');
+        cursos.forEach(curso => {
+            const card = document.createElement('div');
+            card.className = 'card-curso';
+            card.innerHTML = `
+                <div class="icone">${curso.icone}</div>
+                <h4>${curso.titulo}</h4>
+                <p>${curso.desc}</p>
+                <span class="tag">${curso.nivel}</span>
+            `;
+            card.addEventListener('click', () => {
+                alert(`📘 Curso: ${curso.titulo}\nNível: ${curso.nivel}\n\nAcesse www.ev.org.br para se inscrever!`);
+            });
+            listaCursos.appendChild(card);
         });
 
-        const btnPython = document.getElementById('btnPython');
-        const mensagemPython = document.getElementById('mensagemPython');
+        // Contador de alunos animado
+        const contadorEl = document.getElementById('contadorAlunos');
+        let valorAtual = 0;
+        const valorFinal = 1250;
+        const intervalo = setInterval(() => {
+            valorAtual += 25;
+            if (valorAtual >= valorFinal) {
+                valorAtual = valorFinal;
+                clearInterval(intervalo);
+            }
+            contadorEl.textContent = valorAtual.toLocaleString('pt-BR') + '+';
+        }, 30);
 
-        btnPython.addEventListener('click', function() {
-            mensagemPython.classList.toggle('visivel');
-            btnPython.textContent = mensagemPython.classList.contains('visivel')
-                ? 'Ocultar informação' : 'Quero saber mais sobre Python';
+        // Botões
+        document.getElementById('btnExplorar').addEventListener('click', () => {
+            document.getElementById('cursos').scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+        document.getElementById('btnPythonInfo').addEventListener('click', () => {
+            alert('🐍 Curso Python Básico\n\nCarga horária: variável\nDuração: até 60 dias\nCertificado: gratuito e digital\n\nInscreva-se em www.ev.org.br');
+        });
+
+        // Navegação suave + ativo
+        document.querySelectorAll('.sidebar nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('ativo'));
+                link.classList.add('ativo');
             });
         });
-
-        console.log('✨ Site carregado no tema Roxo Neon!');
     </script>
 
 </body>
