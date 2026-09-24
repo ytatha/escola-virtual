@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escola Virtual - Cursos de Programação</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background: #f4f7fc;
+            color: #1e2a3a;
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho */
+        header {
+            background: linear-gradient(135deg, #0a2f5a, #1e4b7a);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navegação */
+        nav {
+            background: #0f3b5e;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.8rem;
+            gap: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #2a6a9e;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Seções */
+        section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        section:hover {
+            transform: translateY(-3px);
+        }
+
+        h2 {
+            color: #0a2f5a;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            border-left: 6px solid #1e4b7a;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            color: #1e4b7a;
+            margin: 1rem 0 0.5rem;
+        }
+
+        /* Grid de cursos */
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .curso-card {
+            background: #f9fbfe;
+            border: 1px solid #dce5ef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .curso-card:hover {
+            box-shadow: 0 8px 20px rgba(30, 75, 122, 0.15);
+            border-color: #1e4b7a;
+        }
+
+        .curso-card h4 {
+            color: #0a2f5a;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .curso-card p {
+            font-size: 0.95rem;
+            color: #3d4f63;
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e1edf9;
+            color: #0a2f5a;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-top: 0.8rem;
+            align-self: flex-start;
+        }
+
+        /* Destaque Python */
+        .python-destaque {
+            background: linear-gradient(135deg, #f0f7ff, #e3efff);
+            border-left: 6px solid #306998;
+        }
+
+        .python-destaque h2 {
+            border-left-color: #306998;
+        }
+
+        .python-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .python-texto {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .python-icone {
+            flex: 1;
+            font-size: 5rem;
+            text-align: center;
+            color: #306998;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #0a2f5a;
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1e4b7a;
+            transform: scale(1.02);
+        }
+
+        /* Rodapé */
+        footer {
+            background: #0a2f5a;
+            color: #cfdbe8;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #aac9e6;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Interatividade JS */
+        .mensagem-js {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: #e1edf9;
+            border-radius: 8px;
+            color: #0a2f5a;
+            font-weight: 500;
+            display: none;
+        }
+
+        .mensagem-js.visivel {
+            display: block;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+            .python-icone {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📚 Escola Virtual</h1>
+        <p>Cursos gratuitos de Programação e Python Básico</p>
+    </header>
+
+    <nav>
+        <a href="#programacao">Programação</a>
+        <a href="#python">Python Básico</a>
+        <a href="#sobre">Sobre</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Seção de Programação baseada no link -->
+        <section id="programacao">
+            <h2>💻 Cursos de Programação</h2>
+            <p>Baseado na área de interesse <strong>Programação</strong> da <a href="https://www.ev.org.br/areas-de-interesse/programacao" target="_blank" rel="noopener">Escola Virtual</a> da Fundação Bradesco. Todos os cursos são gratuitos e com certificado digital.</p>
+
+            <div class="cursos-grid">
+                <!-- Cards de exemplo - a Escola Virtual oferece cursos como: -->
+                <div class="curso-card">
+                    <h4>Lógica de Programação</h4>
+                    <p>Aprenda os fundamentos da lógica para desenvolver algoritmos e resolver problemas computacionais.</p>
+                    <span class="badge">Iniciante</span>
+                </div>
+                <div class="curso-card">
+                    <h4>Python Básico</h4>
+                    <p>Introdução à linguagem Python: variáveis, tipos de dados, estruturas de controle e funções.</p>
+                    <span class="badge">Iniciante</span>
+                </div>
+                <div class="curso-card">
+                    <h4>Java Básico</h4>
+                    <p>Primeiros passos com Java: sintaxe, orientação a objetos e criação de aplicações simples.</p>
+                    <span class="badge">Iniciante</span>
+                </div>
+                <div class="curso-card">
+                    <h4>HTML e CSS</h4>
+                    <p>Desenvolvimento web front-end: estrutura com HTML5 e estilização com CSS3.</p>
+                    <span class="badge">Iniciante</span>
+                </div>
+                <div class="curso-card">
+                    <h4>JavaScript</h4>
+                    <p>Programação client-side para tornar páginas web interativas e dinâmicas.</p>
+                    <span class="badge">Intermediário</span>
+                </div>
+                <div class="curso-card">
+                    <h4>Banco de Dados</h4>
+                    <p>Modelagem e consultas SQL para armazenamento e recuperação de informações.</p>
+                    <span class="badge">Intermediário</span>
+                </div>
+            </div>
+
+            <button class="btn" id="btnMostrarCursos">Mostrar todos os cursos</button>
+            <div class="mensagem-js" id="mensagemCursos">
+                ✅ A Escola Virtual oferece diversos outros cursos na área de Tecnologia. Acesse o site oficial para ver o catálogo completo!
+            </div>
+        </section>
+
+        <!-- Seção Python Básico -->
+        <section id="python" class="python-destaque">
+            <h2>🐍 Python Básico</h2>
+            <div class="python-info">
+                <div class="python-texto">
+                    <p><strong>Python</strong> é uma linguagem de programação versátil, fácil de aprender e amplamente utilizada no mercado. Com ela você pode criar desde scripts simples até aplicações web, análise de dados e inteligência artificial.</p>
+                    <h3>O que você vai aprender:</h3>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Variáveis e tipos de dados</li>
+                        <li>Operadores e expressões</li>
+                        <li>Estruturas condicionais (if/else)</li>
+                        <li>Laços de repetição (for/while)</li>
+                        <li>Funções e módulos</li>
+                        <li>Listas, tuplas e dicionários</li>
+                    </ul>
+                    <button class="btn" id="btnPython">Quero saber mais sobre Python</button>
+                    <div class="mensagem-js" id="mensagemPython">
+                        🐍 Python é uma excelente escolha para iniciantes! Na Escola Virtual você encontra o curso <strong>Python Básico</strong> com certificado gratuito.
+                    </div>
+                </div>
+                <div class="python-icone">
+                    🐍
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Sobre -->
+        <section id="sobre">
+            <h2>ℹ️ Sobre a Escola Virtual</h2>
+            <p>A <strong>Escola Virtual</strong> é uma plataforma de educação online gratuita criada pela <strong>Fundação Bradesco</strong>. Oferece cursos livres de Formação Inicial e Continuada (FIC) nas áreas de Administração, Contabilidade, Desenvolvimento Pessoal, Educação e Tecnologia.</p>
+            <p style="margin-top: 1rem;">Os cursos são autoinstrucionais, com certificado digital válido por 2 anos. Para se inscrever, basta criar uma conta no site oficial: <a href="https://www.ev.org.br" target="_blank" rel="noopener">www.ev.org.br</a>.</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Site demonstrativo criado para fins educacionais. Todos os direitos sobre os cursos pertencem à <a href="https://www.ev.org.br" target="_blank" rel="noopener">Escola Virtual - Fundação Bradesco</a>.</p>
+        <p style="margin-top: 0.5rem;">© 2026 - Exemplo de HTML, CSS e JavaScript com Python Básico</p>
+    </footer>
+
+    <script>
+        // Interatividade: botão mostrar cursos
+        const btnMostrarCursos = document.getElementById('btnMostrarCursos');
+        const mensagemCursos = document.getElementById('mensagemCursos');
+
+        btnMostrarCursos.addEventListener('click', function() {
+            mensagemCursos.classList.toggle('visivel');
+            if (mensagemCursos.classList.contains('visivel')) {
+                btnMostrarCursos.textContent = 'Ocultar mensagem';
+            } else {
+                btnMostrarCursos.textContent = 'Mostrar todos os cursos';
+            }
+        });
+
+        // Interatividade: botão Python
+        const btnPython = document.getElementById('btnPython');
+        const mensagemPython = document.getElementById('mensagemPython');
+
+        btnPython.addEventListener('click', function() {
+            mensagemPython.classList.toggle('visivel');
+            if (mensagemPython.classList.contains('visivel')) {
+                btnPython.textContent = 'Ocultar informação';
+            } else {
+                btnPython.textContent = 'Quero saber mais sobre Python';
+            }
+        });
+
+        // Suavizar rolagem para âncoras
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Mensagem de boas-vindas no console
+        console.log('🚀 Site carregado! Explore os cursos de Programação e Python Básico da Escola Virtual.');
+    </script>
+
+</body>
+</html>
